@@ -5,7 +5,7 @@ from .exceptions import handle_error_response, TDAAPIError
 from .urls import (
     # --ORDERS--
     CANCEL_ORDER,
-    # GET_ORDER,
+    GET_ORDER,
     # GET_ORDERS_BY_PATH,
     GET_ORDER_BY_QUERY,
     PLACE_ORDER,
@@ -472,6 +472,15 @@ class TDClient(object):
         if toEnteredTime:
             params['toEnteredTime'] = toEnteredTime
         return self._request(GET_ORDER_BY_QUERY, params=params).json()
+
+    def getOrder(self, accountId, orderId):
+        '''get the given order
+
+        Args:
+            accountId (int): account id the order is under
+            orderId (int): order id of order to cancel
+        '''
+        return self._request(GET_ORDER.format(accountId=accountId, orderId=orderId), method='GET').json()
 
     def cancelOrder(self, accountId, orderId):
         '''cancel the given order
